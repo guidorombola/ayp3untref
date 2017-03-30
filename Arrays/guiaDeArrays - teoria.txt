@@ -1,0 +1,32 @@
+Guía Arrays
+
+Ejercicio 7:
+
+7.2 Que debemos tener en cuenta al momento de realizar la copia?
+
+Consideraciones a tener en cuenta:
+Si el ciclo for se rige por el tamaño del array destino:
+Si origen es mayor que destino, se copiarán los primeros valores hasta que corte.
+Si destino es mayor que origen, se copiarán las posiciones de origen, y lo otro quedará en 0 (asumiendo que fue inicializado previanmente)
+
+7.4 Puedo realizar una copia desde el array de enteros al de flotantes (utilizando estas funciones)?
+ 
+No se puede realizar una copia desde el array de enteros a flotantes utilizando estas funciones, ya que
+"copiarArrayEnteros" recibe como parámetros dos punteros a int, y "copiarArrayFlotantes" recibe dos punteros a float.
+
+7.5 Que desventajas tiene este código? Se puede mejorar? Cómo (no es necesario hacerlo)?
+
+#define TAMANO_DESTINO  1 /* modificar de ser necesario */
+int main()
+{
+    int origen[] = { 1,2,3,4,5,6,7,8 };
+    int destino[TAMANO_DESTINO];
+    int origenf[] = { 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8 };
+    int destinof[TAMANO_DESTINO];
+    
+    copiar_enteros(destino, origen, /* ... */);
+    copiar_flotantes(destinof, origenf, /* ... */);
+}
+La desventaja de este código es que no reutiliza código, ya que tiene una función para copiar arrays de flotantes, y
+otra para enteros. Se podría definir una función copiar genérica que reciba dos punteros a char para copiar byte a byte
+sin importar el tipo de dato. 
