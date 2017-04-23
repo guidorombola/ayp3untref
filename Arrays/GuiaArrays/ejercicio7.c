@@ -22,7 +22,7 @@ int main()
 
 
 
-int mainc(int argc, char **argv) {
+int maina(int argc, char **argv) {
 
 	int arrayInt1[] = {1,3,5,10,28,-2,11,0};
 	int arrayInt2[8];

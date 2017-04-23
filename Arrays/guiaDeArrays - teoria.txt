@@ -1,5 +1,144 @@
 Guía Arrays
 
+Ejercicio 1:   
+
+    int main()
+    {
+        int i = 29;
+        int j = 50;
+
+        char vector[] = { 0x1, 0x2, 0x3 };
+    }
+
+
+Cuál es la dirección de i?
+&i
+
+Cuál es la dirección de j?
+&j
+
+Cuál es la dirección de vector?
+&vector o vector (direccion de primera posicion)
+
+Cuál es la dirección de vector[0]?
+&vector o vector
+
+Cuál es la dirección de vector[1]?
+vector+1
+
+Observa alguna relación entre estos valores?
+La relación es que para obtener cualquier direccion del array, puedo sumar a vector un entero i
+
+Ejercicio 2:
+
+Dado el siguiente código:
+
+    int main()
+    {
+        int vector[] = { 0x1, 0x2, 0x3 };
+    }
+
+Cuál es el resultado de la siguiente operación: vector + 1? Es la suma algebraica?
+El resultado es la dirección del segundo elemento del arreglo. No es una suma algebraica
+
+Cuál es el resultado de la siguiente operación: vector - 1? Es la resta algebraica?
+El resultado es la dirección de memoria del elemento anterior a la primera posición del array, que interpretará como int. No es una resta algebraica
+
+Cuál es el resultado de la siguiente operación: vector + 200? Puedo hacer esta operación? Porqué?
+El resultado es la posición de memoria de lo que el array interpretará como su elemento 200 (tratando todo como int). Puedo hacer esta operación, pero como desconozco lo que hay en esa posición de memoria, no se si la puedo derreferenciar.
+
+Cuál es el resultado de la siguiente operación: &vector[2] - &vector[0]? Puedo hacer esta operación? Porqué? 
+Esa operacion es lo mismo que (vector+2) - (vector+0) , que es igual a 2 (subindice del tercer elemento). Las operaciones de punteros me permiten hacerlo
+
+Ejercicio 3
+
+1. Predecir el/los valores que imprimirá printf.
+2. Porqué el valor del sizeof es tal?
+3. Cuantos elementos tiene el array decimales?
+4. Cuantos elementos tiene el array enteros?
+5. Cuál es el tamaño de un float?
+6. Cuál es el tamaño de un int?
+7. Qué relación existe entre el tamaño del array y el tamaño del tipo de dato?
+
+int main()
+{
+    double decimales[] = { 1.1, 2.2, 3.3 };
+    int enteros[] = { 2, 8, 16, 32, 64};
+
+    printf("sizeof(decimales): %d\n", sizeof(decimales)); //Imprimira 24 (3 elementos * 8 bytes que ocupa un double)
+    printf("sizeof(enteros): %d\n", sizeof(enteros));	  //Imprimira 20 (5 elementos * 4 bytes que ocupa un int)
+
+    printf("sizeof(double): %d\n", sizeof(double)); 	  //Imprimira 8 (Volumen de un double)
+    printf("sizeof(int): %d\n", sizeof(int)); 	          //Imprimira 4 (Volumen de un int)
+
+    return 0;
+}
+
+7. Tamaño del array (en cantidad de elementos) = (Volumen total del array / volumen del tipo de dato del array)
+
+
+Ejercicio 4
+
+1. Predecir el/los valores que imprimirá printf.
+2. Cuantos elementos contiene el array?
+3. Que estamos haciendo cuando cambiamos el valor del elemento 6?
+4. Podemos hacer lo que estamos haciendo en el punto 3? Porqué?
+
+int main()
+{
+    int enteros[] = { 2, 8, 16, 32, 64};
+
+    printf( enteros[0] );	//Imprimira 2
+    printf( enteros[4] );	//Imprimira 64
+    printf( enteros[5] );	//No sabemos lo que imprimira, ya que estamos accediendo a una posicion de memoria desconocida
+    enteros[5] = 9; 		//Lo que estamos haciendo aca es asignar un entero a los 4 bytes contiguos de memoria del ultimo elemento del array.
+
+    return 0;
+}
+
+2. El array contiene 5 elementos.
+4. Podemos hacer lo que estamos haciendo pero no es correcto, ya que como no sabemos lo que hay en esa posicion, podríamos estar pisando otro dato que nos afecte
+seriamente nuestro programa.
+
+
+Ejercicio 5
+
+1. Predecir el/los valores que imprimirá printf.
+2. Porqué el sizeof de params es tal?
+3. Hacer procedimiento para imprimir el array
+4. Se modifica el array en alguna de las funciones? Porque?
+5. Que es pasaje por valor y por referencia?
+
+void f(int param[]) {
+    printf("sizeof(param): %d\n", sizeof(param) );	//Imprimira 4
+    param[3] = 6;
+};
+
+void g(int* param) {
+    printf("sizeof(param): %d\n", sizeof(param) );	//Imprimira 4
+    param[6] = 6;
+};
+
+
+int main()
+{
+    int array[] = { 1,2,3,4,5,6,7,8 };
+
+    f(array);
+    g(array);
+    
+    // Imprimir 
+}
+
+2. El sizeof de los params es 4 en ambos casos ya que lo que estoy haciendo en cada funcion es pedir el sizeof de los punteros, que es 4 bytes (cuando se pasa un array a una funcion se 
+pasa siempre como puntero y no como el array)
+4. Se modifica en ambas funciones. Cuando yo hago param[6] = 6, es lo mismo que hacer *(param + 6) = 6, es decir, infiere el tipo de dato hacia donde apunta el puntero (int), conoce su
+volumen (4) y avanza 6*4 = 24 posiciones. Cuando llega a esa posicion, se fija hacia adonde apunta, va hasta ese lugar y cambia el valor (derreferenciacion).
+5. Pasaje por valor: Cuando se hace un pasaje a una función por valor, se realiza una copia de la información, que solo tiene sentido dentro del contexto de esa funcion (scope). Luego desaparece.
+Pasaje por referencia: En este caso, lo que se pasa es la dirección de memoria a donde apunta un dato, por lo que al hacer alguna modificación, estoy modificando ese dato en todos los ámbitos, ya que
+en realidad modificamos la variable original.
+
+
 Ejercicio 7:
 
 7.2 Que debemos tener en cuenta al momento de realizar la copia?
@@ -7,7 +146,11 @@ Ejercicio 7:
 Consideraciones a tener en cuenta:
 Si el ciclo for se rige por el tamaño del array destino:
 Si origen es mayor que destino, se copiarán los primeros valores hasta que corte.
-Si destino es mayor que origen, se copiarán las posiciones de origen, y lo otro quedará en 0 (asumiendo que fue inicializado previanmente)
+Si destino es mayor que origen, se copiarán las posiciones de origen, y lo otro se copian datos desconocidos.
+
+Si el ciclo for se rige por el tamaño del array origen:
+Si origen es mayor a destino, se copiarán todos los datos, pero los que queden fuera del tamaño reservado por el array, son susceptibles a ser modificados.
+Si destino es mayor que origen,se copiaran las posiciones a destino hasta donde corte.
 
 7.4 Puedo realizar una copia desde el array de enteros al de flotantes (utilizando estas funciones)?
  

@@ -5,7 +5,7 @@
  *      Author: alumno
  */
 
-int main(int argc, char **argv) {	//Modificar letra
+int mainb(int argc, char **argv) {	//Modificar letra
 
 	int array[] = {1,2,4,6,2};
 	float arrayf[] = {1.1,2.2,3.3};
